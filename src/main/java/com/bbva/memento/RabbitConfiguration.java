@@ -1,12 +1,17 @@
 package com.bbva.memento;
 
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableRabbit
+@ComponentScan(basePackages = "com.bbva.memento")
 public class RabbitConfiguration {
 
     @Bean
@@ -40,8 +45,13 @@ public class RabbitConfiguration {
         return ("clave");
     }
 
-    @Bean(name = "queue")
-    public String queue() {
-        return ("exampleManu");
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory());
+        factory.setConcurrentConsumers(5);
+        factory.setMaxConcurrentConsumers(10);
+
+        return factory;
     }
 }
