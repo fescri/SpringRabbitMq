@@ -14,12 +14,8 @@ public class App  {
         RabbitTemplate template = context.getBean(RabbitTemplate.class);
 
         template.setExchange(context.getBean("exchange", String.class));
-        template.setRoutingKey(context.getBean("routingKey", String.class));
 
-        template.convertAndSend("mensaje enviado");
-
-        String message = (String) template.receiveAndConvert(context.getBean("queue", String.class));
-
-        System.out.println("MESSAGE RECEIVED: " + message);
+        template.convertAndSend(context.getBean("routingKey", String.class) + "1", "Mensaje encolado con clave 1");
+        template.convertAndSend(context.getBean("routingKey", String.class) + "2", "Mensaje encolado con clave 2");
     }
 }
