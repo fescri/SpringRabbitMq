@@ -9,13 +9,16 @@ public class App  {
     public static void main(String[] args) throws InterruptedException {
         ApplicationContext context = new AnnotationConfigApplicationContext(RabbitConfiguration.class);
 
-        //AmqpTemplate template = context.getBean(AmqpTemplate.class);
-
         RabbitTemplate template = context.getBean(RabbitTemplate.class);
 
         template.setExchange(context.getBean("exchange", String.class));
 
-        template.convertAndSend(context.getBean("routingKey", String.class) + "1", "Mensaje encolado con clave 1");
-        template.convertAndSend(context.getBean("routingKey", String.class) + "2", "Mensaje encolado con clave 2");
+        template.convertAndSend(context.getBean("routingKey", String.class) + "1", "Message queued with key 1");
+        template.convertAndSend(context.getBean("routingKey", String.class) + "2", "Message queued with key 2");
+
+        Thread.sleep(10000);
+
+        System.exit(0);
+
     }
 }

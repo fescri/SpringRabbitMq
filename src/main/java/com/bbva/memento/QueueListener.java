@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class QueueListener {
 
-    @RabbitListener(queues = "exampleManu")
+    @RabbitListener(queues = "queue1")
     public void processMessageClave1(String content) {
-        System.out.println("MESSAGE FROM LISTENER CON CLAVE (1): " + content);
+        System.out.println("MESSAGE FROM LISTENER WITH KEY (1): " + content);
     }
 
-    @RabbitListener(queues = "example2Manu")
+    @RabbitListener(queues = "queue2")
     public void processMessageClave2(String content) {
-        System.out.println("MESSAGE FROM LISTENER CON CLAVE (2): " + content);
+        System.out.println("MESSAGE FROM LISTENER WITH KEY (2): " + content);
     }
 }
