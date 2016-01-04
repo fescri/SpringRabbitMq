@@ -1,5 +1,9 @@
 package com.bbva.memento;
 
+import com.rabbitmq.client.DefaultSaslConfig;
+import com.rabbitmq.client.SaslConfig;
+import com.rabbitmq.client.SaslMechanism;
+import com.rabbitmq.client.impl.ExternalMechanism;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -22,12 +26,20 @@ public class RabbitConfiguration {
         RabbitConnectionFactoryBean factoryBean = new RabbitConnectionFactoryBean();
         factoryBean.setUseSSL(true);
         factoryBean.setSslPropertiesLocation(new ClassPathResource("ssl.properties"));
+
+        SaslConfig saslConfig = new SaslConfig() {
+            public SaslMechanism getSaslMechanism(String[] strings) {
+                SaslMechanism mechanism = new ExternalMechanism();
+                return mechanism;
+            }
+        };
+        factoryBean.setSaslConfig(saslConfig);
+
         factoryBean.afterPropertiesSet();
 
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(factoryBean.getObject());
         connectionFactory.setHost("172.17.0.1");
         connectionFactory.setPort(5673);
-
         return connectionFactory;
     }
 
