@@ -16,7 +16,7 @@ public class App  {
         template.convertAndSend(context.getBean("routingKey", String.class) + "1", "Message queued with key 1");
         template.convertAndSend(context.getBean("routingKey", String.class) + "2", "Message queued with key 2");
 
-        Thread.sleep(10000);
+        Thread.sleep(60000);
 
         System.exit(0);
 

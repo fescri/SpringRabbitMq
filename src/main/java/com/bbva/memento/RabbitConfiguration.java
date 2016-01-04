@@ -24,8 +24,8 @@ public class RabbitConfiguration {
         factoryBean.setSslPropertiesLocation(new ClassPathResource("ssl.properties"));
         factoryBean.afterPropertiesSet();
 
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(factoryBean.getObject());
-        connectionFactory.setHost("172.17.0.2");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.setHost("172.17.0.1");
         connectionFactory.setPort(5673);
 
         return connectionFactory;
