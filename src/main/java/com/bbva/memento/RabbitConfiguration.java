@@ -29,7 +29,7 @@ public class RabbitConfiguration {
         SaslConfig saslConfig = new SaslConfig() {
             public SaslMechanism getSaslMechanism(String[] strings) {
                 SaslMechanism mechanism = new ExternalMechanism();
-                return mechanism;
+                return mechanism;cd
             }
         };
         factoryBean.setSaslConfig(saslConfig);
