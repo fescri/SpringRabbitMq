@@ -11,10 +11,18 @@ public class App  {
 
         RabbitTemplate template = context.getBean(RabbitTemplate.class);
 
-        template.setExchange(context.getBean("exchange", String.class));
+        // One Broker only
+        /* template.setExchange(context.getBean("exchange", String.class));
 
         template.convertAndSend(context.getBean("routingKey", String.class) + "1", "Message queued with key 1");
-        template.convertAndSend(context.getBean("routingKey", String.class) + "2", "Message queued with key 2");
+        template.convertAndSend(context.getBean("routingKey", String.class) + "2", "Message queued with key 2");*/
+
+        // Two Federating Brokers
+        template.setExchange(context.getBean("exchange", String.class));
+
+        template.convertAndSend(context.getBean("routingKey", String.class), "Message 1 queued with key");
+        template.convertAndSend(context.getBean("routingKey", String.class), "Message 2 queued with key");
+        template.convertAndSend(context.getBean("routingKey", String.class), "Message 3 queued with key");
 
         Thread.sleep(60000);
 

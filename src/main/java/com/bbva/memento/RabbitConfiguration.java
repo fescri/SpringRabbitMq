@@ -1,6 +1,5 @@
 package com.bbva.memento;
 
-import com.rabbitmq.client.DefaultSaslConfig;
 import com.rabbitmq.client.SaslConfig;
 import com.rabbitmq.client.SaslMechanism;
 import com.rabbitmq.client.impl.ExternalMechanism;
@@ -49,9 +48,16 @@ public class RabbitConfiguration {
         return new RabbitTemplate(connectionFactory());
     }
 
-    @Bean(name = "exchange")
+    // One Broker only
+    /*@Bean(name = "exchange")
     public String exchange() {
         return ("exchange");
+    } */
+
+    // Two Federating Brokers
+    @Bean(name = "exchange")
+    public String exchange() {
+        return ("federate.exchange");
     }
 
     @Bean(name = "routingKey")
@@ -63,8 +69,8 @@ public class RabbitConfiguration {
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() throws Exception {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory());
-        factory.setConcurrentConsumers(5);
-        factory.setMaxConcurrentConsumers(10);
+        //factory.setConcurrentConsumers(5);
+        //factory.setMaxConcurrentConsumers(10);
         return factory;
     }
 }
