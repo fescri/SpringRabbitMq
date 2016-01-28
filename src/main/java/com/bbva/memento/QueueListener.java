@@ -6,14 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class QueueListener {
 
-    // One Broker only
-    /*@RabbitListener(queues = "queue1")
-    public void processMessageClave1(String content) {
-        System.out.println("MESSAGE FROM LISTENER WITH KEY (1): " + content);
+    @RabbitListener(queues = "queue")
+    public void processMessage(String content) {
+        System.out.println("MESSAGE CONSUMED: " + content);
     }
-
-    @RabbitListener(queues = "queue2")
-    public void processMessageClave2(String content) {
-        System.out.println("MESSAGE FROM LISTENER WITH KEY (2): " + content);
-    }*/
 }

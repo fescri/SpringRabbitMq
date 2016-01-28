@@ -22,6 +22,7 @@ public class RabbitConfiguration {
     @Bean
     public ConnectionFactory connectionFactory() throws Exception {
 
+        // Rabbit SSL Conection
         RabbitConnectionFactoryBean factoryBean = new RabbitConnectionFactoryBean();
         factoryBean.setUseSSL(true);
         factoryBean.setSslPropertiesLocation(new ClassPathResource("ssl.properties"));
@@ -29,7 +30,7 @@ public class RabbitConfiguration {
         SaslConfig saslConfig = new SaslConfig() {
             public SaslMechanism getSaslMechanism(String[] strings) {
                 SaslMechanism mechanism = new ExternalMechanism();
-                return mechanism;cd
+                return mechanism;
             }
         };
         factoryBean.setSaslConfig(saslConfig);
@@ -37,8 +38,10 @@ public class RabbitConfiguration {
         factoryBean.afterPropertiesSet();
 
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory(factoryBean.getObject());
-        connectionFactory.setHost("172.17.0.1");
-        connectionFactory.setPort(5673);
+
+        // set of Addresses with rabbit federated brokers included
+        connectionFactory.setAddresses("172.17.0.1:5673,172.17.0.2:5673");
+
         return connectionFactory;
     }
 
@@ -48,13 +51,6 @@ public class RabbitConfiguration {
         return new RabbitTemplate(connectionFactory());
     }
 
-    // One Broker only
-    /*@Bean(name = "exchange")
-    public String exchange() {
-        return ("exchange");
-    } */
-
-    // Two Federating Brokers
     @Bean(name = "exchange")
     public String exchange() {
         return ("federate.exchange");
@@ -69,8 +65,8 @@ public class RabbitConfiguration {
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() throws Exception {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory());
-        //factory.setConcurrentConsumers(5);
-        //factory.setMaxConcurrentConsumers(10);
+        factory.setConcurrentConsumers(5);
+        factory.setMaxConcurrentConsumers(10);
         return factory;
     }
 }
