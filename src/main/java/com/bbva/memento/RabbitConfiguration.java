@@ -40,7 +40,7 @@ public class RabbitConfiguration {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory(factoryBean.getObject());
 
         // set of Addresses with rabbit federated brokers included
-        connectionFactory.setAddresses("172.17.0.1:5673,172.17.0.2:5673");
+        connectionFactory.setAddresses("52.19.140.69:5673");
 
         return connectionFactory;
     }
@@ -53,7 +53,7 @@ public class RabbitConfiguration {
 
     @Bean(name = "exchange")
     public String exchange() {
-        return ("federate.exchange");
+        return ("memento.events");
     }
 
     @Bean(name = "routingKey")

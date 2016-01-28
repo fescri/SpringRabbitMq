@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class QueueListener {
 
-    @RabbitListener(queues = "queue")
+    @RabbitListener(queues = "memento.events.queue")
     public void processMessage(String content) {
         System.out.println("MESSAGE CONSUMED: " + content);
     }
