@@ -26,7 +26,7 @@ public class RabbitConfiguration {
     @Bean
     public ConnectionFactory connectionFactory() throws Exception {
 
-        final Resource resource = new FileSystemResource("/var/properties/memento/cd tarssl.properties");
+        final Resource resource = new FileSystemResource("/var/properties/memento/ssl.properties");
 
         // Rabbit SSL Connection
         RabbitConnectionFactoryBean factoryBean = new RabbitConnectionFactoryBean();
