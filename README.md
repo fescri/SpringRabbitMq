@@ -54,7 +54,7 @@ java -jar SpringRabbitMq-1.0-SNAPSHOT.jar
 Output
 ```
 MESSAGE CONSUMED: Message 1 queued with key
-MESSAGE CONSUMED: Message 1 queued with key
-MESSAGE CONSUMED: Message 1 queued with key
+MESSAGE CONSUMED: Message 2 queued with key
+MESSAGE CONSUMED: Message 3 queued with key
 ```
 After 60 secs program exits(0)
