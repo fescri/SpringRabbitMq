@@ -41,7 +41,7 @@ trustStore.passPhrase=rabbit
 connection.addresses=52.19.140.69:5673
 ```
 
-To test with more than one RabbitMQ Federated broker in __connection.addresses__ include all hostname:port brokers separated with commas
+To test with more than one RabbitMQ Federated broker in __connection.addresses__ include all __hostname:port__ brokers separated with commas
 
 For more detail, please see https://redmine.digitalservices.es/projects/event-subscription/wiki/Rabbitmq_ssl
 
