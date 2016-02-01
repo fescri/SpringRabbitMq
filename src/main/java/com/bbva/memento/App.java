@@ -4,9 +4,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class App  {
+public class App {
 
     public static void main(String[] args) throws InterruptedException {
+
         ApplicationContext context = new AnnotationConfigApplicationContext(RabbitConfiguration.class);
 
         RabbitTemplate template = context.getBean(RabbitTemplate.class);

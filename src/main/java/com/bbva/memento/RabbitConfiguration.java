@@ -12,7 +12,11 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
+
+import java.util.Properties;
 
 @Configuration
 @EnableRabbit
@@ -22,10 +26,12 @@ public class RabbitConfiguration {
     @Bean
     public ConnectionFactory connectionFactory() throws Exception {
 
-        // Rabbit SSL Conection
+        final Resource resource = new FileSystemResource("/var/properties/memento/cd tarssl.properties");
+
+        // Rabbit SSL Connection
         RabbitConnectionFactoryBean factoryBean = new RabbitConnectionFactoryBean();
         factoryBean.setUseSSL(true);
-        factoryBean.setSslPropertiesLocation(new ClassPathResource("ssl.properties"));
+        factoryBean.setSslPropertiesLocation(resource);
 
         SaslConfig saslConfig = new SaslConfig() {
             public SaslMechanism getSaslMechanism(String[] strings) {
@@ -40,14 +46,15 @@ public class RabbitConfiguration {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory(factoryBean.getObject());
 
         // set of Addresses with rabbit federated brokers included
-        connectionFactory.setAddresses("52.19.140.69:5673");
+        final Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+        final String addresses = properties.getProperty("connection.addresses");
+        connectionFactory.setAddresses(addresses);
 
         return connectionFactory;
     }
 
     @Bean
     public RabbitTemplate rabbitTemplate() throws Exception {
-
         return new RabbitTemplate(connectionFactory());
     }
 
