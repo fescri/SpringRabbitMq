@@ -45,3 +45,16 @@ To test with more than one RabbitMQ Federated broker in __connection.addresses__
 
 For more detail, please see https://redmine.digitalservices.es/projects/event-subscription/wiki/Rabbitmq_ssl
 
+### Execution
+
+```
+java -jar SpringRabbitMq-1.0-SNAPSHOT.jar 
+```
+
+Output
+```
+MESSAGE CONSUMED: Message 1 queued with key
+MESSAGE CONSUMED: Message 1 queued with key
+MESSAGE CONSUMED: Message 1 queued with key
+```
+After 60 secs program exits(0)
